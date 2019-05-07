@@ -50,14 +50,10 @@ namespace WheelOfFortune
                 }
                 else
                 {
-                    char formattedGuess = Convert.ToChar(guess);
+                    char formattedGuess = Convert.ToChar(guess.ToLower());
                     if (previousGuesses.Add(formattedGuess))
                     {
                         var result = AttemptGuess(formattedGuess, answer, state);
-                        //Console.WriteLine(state);
-                        //Console.WriteLine($"answer: {answer}");
-                        //Console.WriteLine($"result: {result}");
-                        //Console.WriteLine(string.Join("", state));
                         Console.WriteLine(result);
                         if (string.Join("", state) == answer)
                         {
