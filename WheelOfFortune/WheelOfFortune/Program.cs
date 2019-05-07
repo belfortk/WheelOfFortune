@@ -6,7 +6,12 @@ namespace WheelOfFortune
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Welcome to Hang");
+
+            var player = new Player("kyle");
+            Console.WriteLine(player.Name);
+        
+
         }
     }
 }
