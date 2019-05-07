@@ -7,8 +7,8 @@ namespace WheelOfFortune
     public class Player
     {
         public string Name { get; set; }
-        public int Bank { get; set; }
-        public int RoundMoney { get; set; }
+        public int Bank { get; private set; }
+        public int RoundMoney { get; private set; }
 
         public Player(string name)
         {
@@ -51,7 +51,7 @@ namespace WheelOfFortune
         }
 
         public void AddRoundMoney(int value) {
-            this.RoundMoney = +value;
+            this.RoundMoney += value;
         }
 
 
