@@ -52,8 +52,6 @@ namespace WheelOfFortune
             Console.WriteLine("GAME OVER");
             var gameWinner = FindWinner();
             DisplayWinner(gameWinner);
-
-
         }
 
         public Player FindWinner() {

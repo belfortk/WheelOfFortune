@@ -19,8 +19,10 @@ namespace WheelOfFortune
             while (numberOfPlayers < 1) {
                 Console.WriteLine("Enter number of players:");
                 var input = Console.ReadLine();
-                if(input.GetType() == typeof(int)){
-                    numberOfPlayers = Convert.ToInt32(input);
+                int number;
+                bool success = Int32.TryParse(input, out number);
+                if (success){
+                    numberOfPlayers = number;
                 }
             }
             return numberOfPlayers;
@@ -31,9 +33,11 @@ namespace WheelOfFortune
             while (numberOfRounds < 1) {
                 Console.WriteLine("Enter number of rounds:");
                 var input = Console.ReadLine();
-                if (input.GetType() == typeof(int))
+                int number;
+                bool success = Int32.TryParse(input, out number);
+                if (success)
                 {
-                    numberOfRounds = Convert.ToInt32(input);
+                    numberOfRounds = number;
                 }
             }
             return numberOfRounds;
