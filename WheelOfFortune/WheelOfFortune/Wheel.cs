@@ -6,15 +6,15 @@ namespace WheelOfFortune
 {
     public class Wheel
     {
-        public Object[] values = new object[4];
+        public Object[] values = new object[16];
         public Wheel(int factor)
         {
-            for (var i = 0; i < 2; i++) {
+            for (var i = 0; i < 14; i++) {
                 values[i] = (100* (i+1)) * factor;
             }
 
-            values[2] = "Bankrupt";
-            values[3] = "Lose a Turn";
+            values[14] = "Bankrupt";
+            values[15] = "Lose a Turn";
             
         }
     }

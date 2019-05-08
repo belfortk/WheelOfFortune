@@ -31,6 +31,8 @@ namespace WheelOfFortune
                 for (var p = 0; p < Players.Length; p++) {
                     Console.WriteLine();
                     Console.WriteLine($"It is {Players[p].Name}'s turn.");
+                    System.Threading.Thread.Sleep(1000);
+
                     var turn = new Turn(Answer, this._characterState, Players[p], previousGuesses, this._wheel);
                     answered = turn.Start();
                     if (answered)

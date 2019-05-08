@@ -27,10 +27,12 @@ namespace WheelOfFortune
                 this.Players[i] = new Player(playerName);
             }
 
+
             for (var i = 0; i < this.Rounds; i++){
                 var roundNumber = i + 1;
                 Console.WriteLine();
                 Console.WriteLine($"Starting Round {roundNumber}...");
+                System.Threading.Thread.Sleep(2000);
                 var round = new Round(_words[i], this.Players, new Wheel(roundNumber));
                 var winner = round.Start();
                 DisplayRoundWinner(winner, roundNumber);
@@ -38,6 +40,8 @@ namespace WheelOfFortune
                 DisplayEndRoundMessage();
                 this.Players = round.Players;
             }
+            System.Threading.Thread.Sleep(2000);
+
             Console.WriteLine("GAME OVER");
             var gameWinner = FindWinner();
             DisplayWinner(gameWinner);

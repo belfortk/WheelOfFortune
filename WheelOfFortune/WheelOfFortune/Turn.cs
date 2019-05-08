@@ -36,10 +36,13 @@ namespace WheelOfFortune
             {
 
                 Console.WriteLine("Spinning the wheel...");
+                System.Threading.Thread.Sleep(2000);
                 var reward = this._wheel.values[Player.Spin()];
                 if (reward.GetType() == typeof(int))
                 {
                     Console.WriteLine($"${reward} (per letter)");
+                    System.Threading.Thread.Sleep(1000);
+
                     var guess = Console.ReadLine();
 
                     if (guess == "exit")
@@ -111,18 +114,19 @@ namespace WheelOfFortune
                 {
                     Console.WriteLine("Bankrupt");
                     Player.ResetRoundMoney();
+                    System.Threading.Thread.Sleep(1000);
 
-                }
-                else if ((string)reward == "Lose a Turn")
+                    }
+                    else if ((string)reward == "Lose a Turn")
                 {
                     Console.WriteLine("Lose a Turn");
                     IsPlaying = false;
+                    System.Threading.Thread.Sleep(1000);
+
+                    }
                 }
-            }
 
             }
-            
-
             return solved;
         }
 
