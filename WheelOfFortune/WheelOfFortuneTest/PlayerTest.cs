@@ -56,9 +56,9 @@ namespace WheelOfFortuneTest
             {
                 state[i] = '_';
             }
-            Assert.Equal("h _ _ _ _", this.player.Guess('h', answer, state));
-            Assert.Equal("h e _ _ _", this.player.Guess('e', answer, state));
-            Assert.Equal("Incorrect guess", this.player.Guess('m', answer, state));
+            Assert.Equal("h _ _ _ _", this.player.Guess('h', answer, state, 200));
+            Assert.Equal("h e _ _ _", this.player.Guess('e', answer, state, 400));
+            Assert.Equal("Incorrect guess", this.player.Guess('m', answer, state, 300));
         }
     }
 }

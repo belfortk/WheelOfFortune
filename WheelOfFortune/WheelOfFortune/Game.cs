@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace WheelOfFortune
 {
@@ -10,17 +11,20 @@ namespace WheelOfFortune
         public int Rounds { get; private set; }
         public int NumberOfPlayers { get; private set; }
         private Player[] Players { get; set; }
-        private string[] _words = new string[3] { "microsoft", "software", "seattle" };
+        private const string path = @"C:\Users\v-kybelf\Source\Repos\WheelOfFourChins\WheelOfFortune\WheelOfFortune\Dictionary.txt";
+        private string[] _words;
         public Game(int rounds, int numberOfPlayers)
         {
             this.Rounds = rounds;
             this.Players = new Player[numberOfPlayers];
             this.NumberOfPlayers = numberOfPlayers;
+            string readText = File.ReadAllText(path);
+            _words = readText.Split(" ");
         }
-
         public void Start() {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Wheel of Fortune.");
-
+            Console.ResetColor();
             for (var i = 0; i < NumberOfPlayers; i++) {
                 Console.WriteLine($"Enter Player {i+1}'s name");
                 var playerName = Console.ReadLine();
@@ -31,9 +35,12 @@ namespace WheelOfFortune
             for (var i = 0; i < this.Rounds; i++){
                 var roundNumber = i + 1;
                 Console.WriteLine();
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine($"Starting Round {roundNumber}...");
+                Console.ResetColor();
                 System.Threading.Thread.Sleep(2000);
-                var round = new Round(_words[i], this.Players, new Wheel(roundNumber));
+                var round = new Round(_words[i % _words.Length], this.Players, new Wheel(roundNumber));
                 var winner = round.Start();
                 DisplayRoundWinner(winner, roundNumber);
                 round.ResetAllPlayerRoundMoney();
@@ -59,16 +66,21 @@ namespace WheelOfFortune
         }
 
         public void DisplayWinner(Player winner) {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
             Console.WriteLine("GG, Well Played All");
             Console.WriteLine($"The winner is {winner.Name}. You take home ${winner.Bank}");
+            Console.ResetColor();
 
         }
         public void DisplayRoundWinner(Player winner, int round) {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
             Console.WriteLine($"Congrats {winner.Name}!");
             Console.WriteLine($"You won ${winner.RoundMoney} that for Round {round}.");
             winner.AddMoneyToBank(winner.RoundMoney);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ResetColor();
         }
 
         public void DisplayEndRoundMessage() {
