@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.IO;
+using System.Reflection;
 
 namespace WheelOfFortune
 {
@@ -11,16 +12,22 @@ namespace WheelOfFortune
         public int Rounds { get; private set; }
         public int NumberOfPlayers { get; private set; }
         private Player[] Players { get; set; }
-        private const string path = @"C:\Users\v-kybelf\Source\Repos\WheelOfFourChins\WheelOfFortune\WheelOfFortune\Dictionary.txt";
-        private string[] _words;
+        private string[] _words = LoadDictionary();
         public Game(int rounds, int numberOfPlayers)
         {
             this.Rounds = rounds;
             this.Players = new Player[numberOfPlayers];
             this.NumberOfPlayers = numberOfPlayers;
-            string readText = File.ReadAllText(path);
-            _words = readText.Split(" ");
         }
+
+        public static string[] LoadDictionary()
+        {
+            var filePath = Path.GetFullPath(@"..\..\..\Dictionary\Dictionary.txt");
+            string readText = File.ReadAllText(filePath);
+            var words = readText.Split(" ");
+            return words;
+        }
+
         public void Start() {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Wheel of Fortune.");

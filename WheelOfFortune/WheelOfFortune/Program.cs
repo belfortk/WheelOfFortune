@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace WheelOfFortune
 {
@@ -11,7 +12,6 @@ namespace WheelOfFortune
             var numberOfRounds = GetNumberOfRounds();
             var game = new Game(numberOfRounds, numPlayers);
             game.Start();
-
         }
 
         public static int GetNumberOfPlayers() {
