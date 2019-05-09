@@ -50,6 +50,12 @@ namespace WheelOfFortune
                 var round = new Round(_words[i % _words.Length], this.Players, new Wheel(roundNumber));
                 var winner = round.Start();
                 DisplayRoundWinner(winner, roundNumber);
+                if (winner.RoundMoney == 0) {
+                    winner.AddMoneyToBank(800);
+                }
+                else {
+                    winner.AddMoneyToBank(winner.RoundMoney);
+                }
                 round.ResetAllPlayerRoundMoney();
                 DisplayEndRoundMessage();
                 this.Players = round.Players;
@@ -57,17 +63,27 @@ namespace WheelOfFortune
             System.Threading.Thread.Sleep(2000);
 
             Console.WriteLine("GAME OVER");
-            var gameWinner = FindWinner();
-            DisplayWinner(gameWinner);
+            FindWinner();
         }
 
-        public Player FindWinner() {
+        public void FindWinner() {
             var sortedPlayers = Players.OrderBy(p => p.Bank);
+            var length = sortedPlayers.Count();
             Console.WriteLine();
             foreach (Player player in Players) {
                 Console.WriteLine($"{player.Name}: {player.Bank}");
             }
-            return sortedPlayers.Last();
+            if (sortedPlayers.ElementAt(length - 2).Bank == sortedPlayers.Last().Bank)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine();
+                Console.WriteLine("GG, Well Played All");
+                Console.WriteLine("Tie game.");
+                Console.ResetColor();
+            }
+            else {
+                DisplayWinner(sortedPlayers.Last());
+            }
         }
 
         public void DisplayWinner(Player winner) {
@@ -83,7 +99,6 @@ namespace WheelOfFortune
             Console.WriteLine();
             Console.WriteLine($"Congrats {winner.Name}!");
             Console.WriteLine($"You won ${winner.RoundMoney} that for Round {round}.");
-            winner.AddMoneyToBank(winner.RoundMoney);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.ResetColor();
         }

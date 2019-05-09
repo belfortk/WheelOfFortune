@@ -4,7 +4,7 @@ using System.IO;
 
 namespace WheelOfFortune
 {
-    class Program
+    class Program 
     {
         static void Main(string[] args)
         {
