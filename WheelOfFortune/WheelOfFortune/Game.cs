@@ -40,8 +40,8 @@ namespace WheelOfFortune
             string readText = File.ReadAllText(filePath);
             var words = readText.Split(" ");
             Random r = new Random();
-            var randomized = words.OrderBy(x => r.Next()).ToArray();
-            return words;
+            var randomizedWords = words.OrderBy(x => r.Next()).ToArray();
+            return randomizedWords;
         }
 
         /// <summary>
@@ -105,8 +105,12 @@ namespace WheelOfFortune
             Console.WriteLine();
             foreach (Player player in Players) {
                 Console.WriteLine($"{player.Name}: {player.Bank}");
+
             }
-            if (sortedPlayers.ElementAt(length - 2).Bank == sortedPlayers.Last().Bank)
+            if (sortedPlayers.Count() == 1) {
+                DisplayWinner(sortedPlayers.Last());
+            }
+            else if (sortedPlayers.ElementAt(length - 2).Bank == sortedPlayers.Last().Bank)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine();
