@@ -99,7 +99,7 @@ namespace WheelOfFortune
             System.Threading.Thread.Sleep(2000);
 
             Console.WriteLine("GAME OVER");
-            FindWinner();
+            FindWinner(this.Players);
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace WheelOfFortune
         /// Displays them in a table. Displays if there is a tie.
         /// Displays winner if there is a winner.
         /// </remarks>
-        public void FindWinner() {
-            var sortedPlayers = Players.OrderBy(p => p.Bank);
+        public void FindWinner(Player[] players) {
+            var sortedPlayers = players.OrderBy(p => p.Bank);
             var length = sortedPlayers.Count();
             Console.WriteLine();
             foreach (Player player in Players) {
