@@ -7,11 +7,19 @@ using System.Reflection;
 
 namespace WheelOfFortune
 {
+    /// <summary>
+    /// The Game class.
+    /// Contains the methods for starting the game, finding the winner, and displaying game state messages.
+    /// </summary>
     public class Game
     {
+        /// <value>Gets the number of rounds in the Game</value>
         public int Rounds { get; private set; }
+        /// <value>Gets the number of players.</value>
         public int NumberOfPlayers { get; private set; }
+        /// <value>Gets and array of the Players.</value>
         private Player[] Players { get; set; }
+        /// <value> Holds the word bank </value>
         private string[] _words = LoadDictionary();
         public Game(int rounds, int numberOfPlayers)
         {
@@ -20,14 +28,31 @@ namespace WheelOfFortune
             this.NumberOfPlayers = numberOfPlayers;
         }
 
+        /// <summary>
+        /// Creates the word bank from the words found in Dictionary/Dictionary.txt.
+        /// </summary>
+        /// <returns>
+        /// A string array of words pulled from Dictionary/Dictionary.txt
+        /// </returns>
         public static string[] LoadDictionary()
         {
             var filePath = Path.GetFullPath(@"..\..\..\Dictionary\Dictionary.txt");
             string readText = File.ReadAllText(filePath);
             var words = readText.Split(" ");
+            Random r = new Random();
+            var randomized = words.OrderBy(x => r.Next()).ToArray();
             return words;
         }
 
+        /// <summary>
+        /// Starts the game loop. Makes a new Round for Rounds times.
+        /// </summary>
+        /// <remark>
+        /// At the end of the round, pretty prints the winner and updates their Bank.
+        /// </remark>
+        /// <remarks>
+        /// At the end of all rounds, finds and pretty prints the winner.
+        /// </remarks>
         public void Start() {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Wheel of Fortune.");
@@ -66,6 +91,14 @@ namespace WheelOfFortune
             FindWinner();
         }
 
+        /// <summary>
+        /// Finds the winner of the game.
+        /// </summary>
+        /// <remarks>
+        /// Creates a IEnumerable of Players, sorted by Player.Bank
+        /// Displays them in a table. Displays if there is a tie.
+        /// Displays winner if there is a winner.
+        /// </remarks>
         public void FindWinner() {
             var sortedPlayers = Players.OrderBy(p => p.Bank);
             var length = sortedPlayers.Count();
@@ -86,6 +119,9 @@ namespace WheelOfFortune
             }
         }
 
+        /// <summary>
+        /// Pretty prints the provided winner of the game.
+        /// </summary>
         public void DisplayWinner(Player winner) {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
@@ -94,6 +130,10 @@ namespace WheelOfFortune
             Console.ResetColor();
 
         }
+
+        /// <summary>
+        /// Pretty prints the provided winner of the round and the round number
+        /// </summary>
         public void DisplayRoundWinner(Player winner, int round) {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
@@ -103,6 +143,9 @@ namespace WheelOfFortune
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Pretty prints the Bank of each Player in Players.
+        /// </summary>
         public void DisplayEndRoundMessage() {
             Console.WriteLine();
             Console.WriteLine("Total earnings thus far:");

@@ -17,10 +17,6 @@ namespace WheelOfFortuneTest
 
         }
 
-        [Fact]
-        public void FindWinnerTest() {
-            
-        }
 
 
     }

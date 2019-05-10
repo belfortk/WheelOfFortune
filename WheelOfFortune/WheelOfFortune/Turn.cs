@@ -4,13 +4,40 @@ using System.Text;
 
 namespace WheelOfFortune
 {
+    /// <summary>
+    /// Contains the main game engine loop.
+    /// The logic for a user's turn lives in a disgustingly untestable while loop.
+    /// </summary>
     class Turn
     {
+        /// <values>
+        /// Get the answer to the puzzle
+        /// </values>
         public string Answer { get; private set; }
+
+        /// <values>
+        /// Gets the current Player whose turn it is.
+        /// </values>
         public Player Player { get; private set; }
+
+        /// <values>
+        /// Gets the state of the Puzzle.
+        /// </values>
         public char[] CharacterState { get; private set; }
+
+        /// <values>
+        /// Flag for ending a Player's turn.
+        /// </values>
         private bool IsPlaying { get; set; }
+
+        /// <values>
+        /// Gets the previous guess.
+        /// </values>
         public HashSet<char> PreviousGuesses { get; private set; }
+
+        /// <values>
+        /// Gets the wheel of prizes
+        /// </values>
         private Wheel _wheel;
         public Turn(string answer, char[] characterState, Player player, HashSet<char> previousGuesses, Wheel wheel)
         {
@@ -22,12 +49,18 @@ namespace WheelOfFortune
             this._wheel = wheel;
         }
 
+        /// <values>
+        /// Starts the loop for a Player's turn.
+        /// Loop runs until the Player either solves the puzzle, spins the wheel to "Lose Turn" or guesses incorrectly.
+        /// Also handles for passing turn and exiting program.
+        /// </values>
         public Boolean Start()
         {
             var solved = false;
 
 
-            Console.WriteLine("Type in a letter to guess. Type 'solve' to guess the answer. Type 'exit' quit.");
+            Console.WriteLine("Type in a letter to guess. Type '!solve' to guess the answer.");
+            Console.WriteLine("Type '!pass' quit. Type '!exit' to quit.");
             Console.WriteLine(DisplayCharacterState(this.CharacterState));
 
 
@@ -45,13 +78,17 @@ namespace WheelOfFortune
 
                     var guess = Console.ReadLine();
 
-                    if (guess == "exit")
+                    if (guess == "!pass")
                     {
                         IsPlaying = false;
                         break;
                     }
 
-                    if (guess.ToLower() == "solve")
+                    if (guess == "!exit") {
+                        System.Environment.Exit(1);
+                    }
+
+                    if (guess.ToLower() == "!solve")
                     {
                         Console.WriteLine("Ok, please enter your solution.");
                         var attempt = Console.ReadLine();
@@ -130,6 +167,14 @@ namespace WheelOfFortune
             return solved;
         }
 
+        /// <summary>
+        /// Returns formatted state of guessed characters.
+        /// <example>
+        /// ['m', 'i', 'c', 'r', '_', 's', 'o', 'f', '_t'] => "m i c r _ s o f t"
+        /// </example>
+        /// </summary>
+        /// <param name="characterState"></param>
+        /// <returns></returns>
         public string DisplayCharacterState(char[] characterState)
         {
             return string.Join(" ", characterState);

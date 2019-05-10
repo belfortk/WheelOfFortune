@@ -4,13 +4,34 @@ using System.Text;
 
 namespace WheelOfFortune
 {
+    /// <summary>
+    /// The Round class contains the methods to start the round and reset all the Player.RoundMoney at the end of the round.
+    /// </summary>
     class Round
     {
+        /// <values>
+        /// Get the array of Players
+        /// </values>
         public Player[] Players { get; private set; }
+
+        /// <values>
+        /// Get the answer string. This is the solution to the puzzle.
+        /// </values>
         public string Answer { get; private set; }
+
+        /// <values>
+        /// the array of characters that represent which letters have guessed.
+        /// </values>
+        
         public char[] _characterState { get; private set; }
+        /// <values>
+        /// The wheel for this round. The values change each round.
+        /// </values>
         private Wheel _wheel;
 
+        /// <values>
+        /// The Set of previously guessed characters.
+        /// </values>
         public HashSet<char> previousGuesses = new HashSet<char>();
         public Round(string answer, Player[] players, Wheel wheel) 
         {
@@ -24,6 +45,13 @@ namespace WheelOfFortune
             this._wheel = wheel;
         }
 
+        /// <summary>
+        /// While the puzzle is unsolved, give each Player a turn solving it.
+        /// </summary>
+        /// <remarks>
+        /// If a player does not solve the puzzle, update the state of the puzzle and add to previous guesses.
+        /// </remarks>
+        /// <returns>Returns the winning Player of the round. </returns>
         public Player Start() {
             var answered = false;
             int winner = 0;
@@ -49,6 +77,9 @@ namespace WheelOfFortune
             return Players[winner];
         }
 
+        /// <summary>
+        /// Loops through all the Players and set's their RoundMoney to 0;
+        /// </summary>
         public void ResetAllPlayerRoundMoney() {
             foreach (Player player in Players) {
                 player.ResetRoundMoney();
