@@ -7,7 +7,7 @@ namespace WheelOfFortune
     /// <summary>
     /// The Round class contains the methods to start the round and reset all the Player.RoundMoney at the end of the round.
     /// </summary>
-    class Round
+    public class Round
     {
         /// <values>
         /// Get the array of Players

@@ -8,7 +8,7 @@ namespace WheelOfFortune
     /// Contains the main game engine loop.
     /// The logic for a user's turn lives in a disgustingly untestable while loop.
     /// </summary>
-    class Turn
+    public class Turn
     {
         /// <values>
         /// Get the answer to the puzzle
@@ -60,7 +60,7 @@ namespace WheelOfFortune
 
 
             Console.WriteLine("Type in a letter to guess. Type '!solve' to guess the answer.");
-            Console.WriteLine("Type '!pass' quit. Type '!exit' to quit.");
+            Console.WriteLine("Type '!pass' pass your turn. Type '!exit' to quit.");
             Console.WriteLine(DisplayCharacterState(this.CharacterState));
 
 

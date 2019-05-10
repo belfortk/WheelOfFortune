@@ -18,9 +18,9 @@ namespace WheelOfFortune
         /// <value>Gets the number of players.</value>
         public int NumberOfPlayers { get; private set; }
         /// <value>Gets and array of the Players.</value>
-        private Player[] Players { get; set; }
+        public Player[] Players { get; private set; }
         /// <value> Holds the word bank </value>
-        private string[] _words = LoadDictionary();
+        private string[] _words;
         public Game(int rounds, int numberOfPlayers)
         {
             this.Rounds = rounds;
@@ -44,6 +44,15 @@ namespace WheelOfFortune
             return randomizedWords;
         }
 
+
+        /// <summary>
+        /// Adds players to Game.Players[]
+        /// </summary>
+        public void AddPlayer(int index, Player player) {
+            this.Players[index] = player;
+
+        }
+
         /// <summary>
         /// Starts the game loop. Makes a new Round for Rounds times.
         /// </summary>
@@ -54,13 +63,15 @@ namespace WheelOfFortune
         /// At the end of all rounds, finds and pretty prints the winner.
         /// </remarks>
         public void Start() {
+            _words = LoadDictionary();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Wheel of Fortune.");
             Console.ResetColor();
             for (var i = 0; i < NumberOfPlayers; i++) {
                 Console.WriteLine($"Enter Player {i+1}'s name");
                 var playerName = Console.ReadLine();
-                this.Players[i] = new Player(playerName);
+                AddPlayer(i, new Player(playerName));
+                //this.Players[i] = new Player(playerName);
             }
 
 
@@ -82,7 +93,7 @@ namespace WheelOfFortune
                     winner.AddMoneyToBank(winner.RoundMoney);
                 }
                 round.ResetAllPlayerRoundMoney();
-                DisplayEndRoundMessage();
+                DisplayEndRoundMessage(Players);
                 this.Players = round.Players;
             }
             System.Threading.Thread.Sleep(2000);
@@ -104,7 +115,7 @@ namespace WheelOfFortune
             var length = sortedPlayers.Count();
             Console.WriteLine();
             foreach (Player player in Players) {
-                Console.WriteLine($"{player.Name}: {player.Bank}");
+                Console.WriteLine($"{player.Name}: ${player.Bank}");
 
             }
             if (sortedPlayers.Count() == 1) {
@@ -150,10 +161,10 @@ namespace WheelOfFortune
         /// <summary>
         /// Pretty prints the Bank of each Player in Players.
         /// </summary>
-        public void DisplayEndRoundMessage() {
+        public void DisplayEndRoundMessage(Player[] players) {
             Console.WriteLine();
             Console.WriteLine("Total earnings thus far:");
-            foreach (Player player in Players)
+            foreach (Player player in players)
             {
                 Console.WriteLine($"{player.Name}: ${player.Bank}");
             }
